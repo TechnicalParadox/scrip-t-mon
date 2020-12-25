@@ -65,7 +65,7 @@ class Creature
 
 // Create a Creature with Inquirer prompts
 /**
- * Creates a creature with inquirer prompts.
+ * Creates a creature with inquirer prompts and passes it back to rf.
  * @param  {function} rf - the function to pass the new Creature to
  * @return {undefined}
  */
