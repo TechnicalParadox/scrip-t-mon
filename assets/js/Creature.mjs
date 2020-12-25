@@ -63,7 +63,6 @@ class Creature
 
 }
 
-// Create a Creature with Inquirer prompts
 /**
  * Creates a creature with inquirer prompts and passes it back to rf.
  * @param  {function} rf - the function to pass the new Creature to
@@ -95,8 +94,91 @@ function createCreature(rf)
 
   inquirer
     .prompt(creatureCreationQs)
-    .then(a => {rf(new Creature(a.name, a.maxHealth, a.speed));})
+    .then(answers => {attackInquirer(rf, answers);}) // We know what creature to create, now lets work on Attacks
     .catch(error => {console.log("Error:", error);});
+}
+
+function attackInquirer(rf, a, c)
+{
+  let creature;
+  if (c) creature = c;
+  else creature = new Creature(a.name, a.maxHealth, a.speed);
+
+  let mustAdd = false;
+  let cantAdd = false;
+  if (creature.attacks.length == 0)
+    mustAdd = true;
+  else if (creature.attacks.length >= 4) // Have up to 4 attacks per Creature
+    cantAdd = true;
+
+  if (mustAdd || !cantAdd) // If there is room for more attacks
+  {
+    // Ask if the user wants to add an attack
+    inquirer
+      .prompt
+      (
+        {
+          type: 'confirm',
+          name: 'add',
+          message: 'Would you like to add another attack',
+          default: true
+        }
+      )
+      .then(answer => addConfirmer(rf, answer, creature))
+      .catch(e => {console.log("Error", e);});
+  }
+  else // User can't add another attack
+  {
+    rf(creature);
+  }
+}
+
+function addConfirmer(rf, a, creature)
+{
+  if (a.add) // User wants to add another attack
+  {
+    let attackQuestions =
+    [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Attack name:',
+        validate: a => {return a ? true : 'Enter an attack name!';}
+      },
+      {
+        type: 'number',
+        name: 'damage',
+        message: 'Attack damage:',
+        validate: a => {return a ? true : 'Enter attack damage!';}
+      },
+      {
+        type: 'number',
+        name: 'accuracy',
+        message: 'Attack accuracy (0-100):',
+        validate: a => {return a ? true : 'Enter attack accuracy!';}
+      },
+      {
+        type: 'number',
+        name: 'speed',
+        message: 'Attack speed (0-200):',
+        validate: a => {return a ? true : 'Enter attack speed!';}
+      }
+    ]
+
+    inquirer
+      .prompt(attackQuestions)
+      .then(a => createAttack(rf, a, creature))
+      .catch(e => {console.log("Error", e);});
+  }
+  else // User is finished adding attacks
+    rf(creature);
+}
+
+function createAttack(rf, a, creature)
+{
+  creature.addAttack(a.name, a.damage, a.accuracy, a.speed);
+  console.log(`Attack added for ${creature.getName()}`,creature.getAttacks()[creature.getAttacks().length - 1]);
+  attackInquirer(rf, undefined, creature);
 }
 
 export { Creature };

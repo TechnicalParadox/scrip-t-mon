@@ -10,10 +10,6 @@ var player, enemy;
 
 function init()
 {
-  console.log("Test");
-  let myObject = new TestObject("My Guy");
-  myObject.sayName();
-
   console.log("You are about to create your creature.");
   createCreature(pt2);
 }
@@ -21,8 +17,6 @@ function init()
 var pt2 = function(creature)
 {
   player = creature;
-  player.addAttack("Move A", 100, 100, 100);
-  player.addAttack("Move B", 125, 75, 110);
   console.log(player);
 
   console.log("You are about to create your enemy.");
@@ -32,10 +26,7 @@ var pt2 = function(creature)
 var pt3 = function(creature)
 {
   enemy = creature;
-  enemy.addAttack("Move A", 100, 100, 100);
-  enemy.addAttack("Move B", 125, 75, 110);
   console.log(enemy);
-
 }
 
 init();
