@@ -1,13 +1,41 @@
 import { TestObject } from './assets/js/TestObject.mjs';
 import { Creature } from './assets/js/Creature.mjs';
+import { createCreature } from './assets/js/Creature.mjs';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-console.log("Test");
-let myObject = new TestObject("My Guy");
+const inquirer = require('inquirer');
 
-myObject.sayName();
+var player, enemy;
 
-let giamo = new Creature("Giamo", 1000, 100);
-giamo.addAttack("Move A", 100, 100);
-giamo.addAttack("Move B", 125, 75);
+function init()
+{
+  console.log("Test");
+  let myObject = new TestObject("My Guy");
+  myObject.sayName();
 
-console.log(giamo);
+  console.log("You are about to create your creature.");
+  createCreature(pt2);
+}
+
+var pt2 = function(answers)
+{
+  player = new Creature(answers.name, answers.maxHealth, answers.speed);
+  player.addAttack("Move A", 100, 100, 100);
+  player.addAttack("Move B", 125, 75, 110);
+  console.log(player);
+
+  console.log("You are about to create your enemy.");
+  createCreature(pt3);
+}
+
+var pt3 = function(answers)
+{
+  enemy = new Creature(answers.name, answers.maxHealth, answers.speed);
+  enemy.addAttack("Move A", 100, 100, 100);
+  enemy.addAttack("Move B", 125, 75, 110);
+  console.log(enemy);
+
+}
+
+init();
