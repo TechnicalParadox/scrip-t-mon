@@ -18,9 +18,9 @@ function init()
   createCreature(pt2);
 }
 
-var pt2 = function(answers)
+var pt2 = function(creature)
 {
-  player = new Creature(answers.name, answers.maxHealth, answers.speed);
+  player = creature;
   player.addAttack("Move A", 100, 100, 100);
   player.addAttack("Move B", 125, 75, 110);
   console.log(player);
@@ -29,9 +29,9 @@ var pt2 = function(answers)
   createCreature(pt3);
 }
 
-var pt3 = function(answers)
+var pt3 = function(creature)
 {
-  enemy = new Creature(answers.name, answers.maxHealth, answers.speed);
+  enemy = creature;
   enemy.addAttack("Move A", 100, 100, 100);
   enemy.addAttack("Move B", 125, 75, 110);
   console.log(enemy);

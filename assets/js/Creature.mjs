@@ -64,7 +64,12 @@ class Creature
 }
 
 // Create a Creature with Inquirer prompts
-function createCreature(f)
+/**
+ * Creates a creature with inquirer prompts.
+ * @param  {function} rf - the function to pass the new Creature to
+ * @return {undefined}
+ */
+function createCreature(rf)
 {
   const creatureCreationQs =
   [
@@ -83,14 +88,14 @@ function createCreature(f)
     {
       type: 'number',
       name: 'speed',
-      message: 'Creature\'s Speed:',
-      validate: a => {return a ? true : 'Enter the Creature\'s speed!';}
+      message: 'Creature\'s Speed (0-200):',
+      validate: a => {return a ? true : 'Enter the Creature\'s speed (0-200)!';}
     }
   ];
 
   inquirer
     .prompt(creatureCreationQs)
-    .then(a => {f(a);})
+    .then(a => {rf(new Creature(a.name, a.maxHealth, a.speed));})
     .catch(error => {console.log("Error:", error);});
 }
 
