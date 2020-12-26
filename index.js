@@ -1,5 +1,6 @@
 import { TestObject } from './assets/js/TestObject.mjs';
 import { Creature } from './assets/js/Creature.mjs';
+import { Battle } from './assets/js/Battle.mjs';
 import { createCreature } from './assets/js/Creature.mjs';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -27,6 +28,9 @@ var pt3 = function(creature)
 {
   enemy = creature;
   console.log(enemy);
+
+  let fight = new Battle(player, enemy);
+  fight.begin();
 }
 
 init();

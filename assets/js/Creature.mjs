@@ -58,6 +58,7 @@ class Creature
   {
     // TODO: Account for accuracy/etc and this creatures stats and dynmically respond
     // % Chance of hit = (Attack Speed / Creature's Speed) * Attack Accuracy
+    
   }
 
 
@@ -65,7 +66,7 @@ class Creature
 
 /**
  * Creates a creature with inquirer prompts and passes it back to rf.
- * @param  {function} rf - the function to pass the new Creature to
+ * @param  {function} rf - the function to pass the new Creature to upon creation
  * @return {undefined}
  */
 function createCreature(rf)
@@ -98,6 +99,7 @@ function createCreature(rf)
     .catch(error => {console.log("Error:", error);});
 }
 
+/** Asks the user if they want to add more attacks */
 function attackInquirer(rf, a, c)
 {
   let creature;
@@ -124,7 +126,7 @@ function attackInquirer(rf, a, c)
           default: true
         }
       )
-      .then(answer => addConfirmer(rf, answer, creature))
+      .then(answer => addAttackConfirmer(rf, answer, creature))
       .catch(e => {console.log("Error", e);});
   }
   else // User can't add another attack
@@ -133,7 +135,8 @@ function attackInquirer(rf, a, c)
   }
 }
 
-function addConfirmer(rf, a, creature)
+/** Asks questions about the attack to create */
+function addAttackConfirmer(rf, a, creature)
 {
   if (a.add) // User wants to add another attack
   {
@@ -174,10 +177,17 @@ function addConfirmer(rf, a, creature)
     rf(creature);
 }
 
+/**
+ * Adds a new attack to Creature's attacks list
+ * @param  {function} rf     - the function to call after Creature creation is finished.
+ * @param  {Object} a        - The array of answers from the previous inquirer.
+ * @param  {Creature} creature The creature whom we need to add the attack to.
+ * @return {undefined}
+ */
 function createAttack(rf, a, creature)
 {
   creature.addAttack(a.name, a.damage, a.accuracy, a.speed);
-  console.log(`Attack added for ${creature.getName()}`,creature.getAttacks()[creature.getAttacks().length - 1]);
+  console.log(`Attack added for ${creature.getName()}`, creature.getAttacks()[creature.getAttacks().length - 1]);
   attackInquirer(rf, undefined, creature);
 }
 
