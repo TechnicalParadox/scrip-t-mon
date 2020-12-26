@@ -9,7 +9,9 @@ class Battle
   begin()
   {
     console.log("A battle begins...");
-    console.log(`${this.getA().getName()} vs. ${this.getB().getName()}`);
+    console.log(this.getA().getName(), " --- VS --- ", this.getB().getName());
+    console.log("Health:",this.getA().getHealth(), "vs", this.getB().getHealth());
+    console.log("Speed:",this.getA().getSpeed(), "vs", this.getB().getSpeed());
   }
 
   setA(a) { this.creature_a = a; }
