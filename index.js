@@ -31,6 +31,12 @@ var pt3 = function(creature)
 
   let fight = new Battle(player, enemy);
   fight.begin();
+
+  while (fight.isFighting())
+  {
+    fight.status();
+    fight.nextMove();
+  }
 }
 
 init();
