@@ -58,10 +58,43 @@ class Creature
   {
     // TODO: Account for accuracy/etc and this creatures stats and dynmically respond
     // % Chance of hit = (Attack Speed / Creature's Speed) * Attack Accuracy
-    
+
   }
 
+  getMove(battle)
+  {
+    let moveQs =
+    [
+      {
+        type: 'list',
+        name: 'move',
+        message: ('What would you like to do, '+this.getName()+'?'),
+        choices:
+        [
+          { name: 'Attack', value: 'attack' },
+          { name: 'Defend', value: 'defend' },
+          { name: 'Flee', value: 'flee' }
+        ]
+      }
+    ]
 
+    inquirer
+      .prompt(moveQs)
+      .then(a =>
+        {
+          let move = a.move;
+          if (move == 'attack') this.chooseAttack(battle);
+          else battle.moveHandler(move);
+        })
+      .catch(e => {console.log(e);});
+  }
+
+  chooseAttack(battle)
+  {
+    let attack;
+    // TODO: Choose attack
+    return battle.moveHandler(attack);
+  }
 }
 
 /**
@@ -190,6 +223,7 @@ function createAttack(rf, a, creature)
   console.log(`Attack added for ${creature.getName()}`, creature.getAttacks()[creature.getAttacks().length - 1]);
   attackInquirer(rf, undefined, creature);
 }
+
 
 export { Creature };
 export { createCreature };
