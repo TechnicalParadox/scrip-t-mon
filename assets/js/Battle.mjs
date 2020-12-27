@@ -21,7 +21,7 @@ class Battle
 
       }
 
-      this.fight(); // Should make this.isFighting false before calling if Battle is over
+      this.endTurn(); // Should make this.isFighting false before calling if Battle is over
     };
   }
 
@@ -67,8 +67,7 @@ class Battle
 
   getStatus()
   {
-    console.log(this.getNameA() + ":", this.getHealthA() +"HP");
-    console.log(this.getNameB() + ":", this.getHealthB() +"HP");
+    console.log(this.getNameA()+": "+this.getHealthA()+"HP",'|', this.getNameB()+": "+this.getHealthB()+"HP");
     console.log("It is " + this.getTurnName() + "'s turn...");
   }
 
