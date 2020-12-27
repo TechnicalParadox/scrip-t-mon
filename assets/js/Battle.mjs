@@ -6,6 +6,23 @@ class Battle
     this.setB(b);
     this.fighting = false;
     this.asTurn = this.getFirstTurn();
+    this.moveHandler = function(move)
+    {
+      switch (move)
+      {
+        case 'defend':
+          // TODO: defend
+          break;
+        case 'flee':
+          // TODO: flee
+          break;
+        default:
+          // TODO: handle attack passed to move
+
+      }
+
+      this.fight(); // Should make this.isFighting false before calling if Battle is over
+    };
   }
 
   begin()
@@ -15,6 +32,7 @@ class Battle
     console.log("Health:",this.getA().getHealth(), "vs", this.getB().getHealth());
     console.log("Speed:",this.getA().getSpeed(), "vs", this.getB().getSpeed());
     this.fighting = true;
+    this.fight();
   }
 
   getFirstTurn() { return (this.getSpeedA() >= this.getSpeedB()); }
@@ -31,24 +49,49 @@ class Battle
 
   getNameB() { return this.getB().getName(); }
 
+  getSpeedA() { return this.getA().getSpeed(); }
+
+  getSpeedB() { return this.getB().getSpeed(); }
+
   getHealthA() { return this.getA().getHealth(); }
 
   getHealthB() { return this.getB().getHealth(); }
 
   isFighting() { return this.fighting; }
 
-  getTurn() { return this}
+  getTurnName() { return this.asTurn ? this.getNameA() : this.getNameB(); }
 
-  status()
+  isAsTurn() { return this.asTurn; }
+
+  endTurn() { this.asTurn = !this.isAsTurn(); this.fight(); }
+
+  getStatus()
   {
     console.log(this.getNameA() + ":", this.getHealthA() +"HP");
     console.log(this.getNameB() + ":", this.getHealthB() +"HP");
-    console.log("It is " + this.getTurn() + "'s turn...");
+    console.log("It is " + this.getTurnName() + "'s turn...");
+  }
+
+  fight()
+  {
+    if (this.isFighting())
+    {
+      this.getStatus();
+      this.nextMove();
+    }
+    else { this.endFight(); }
   }
 
   nextMove()
   {
-    
+    if (this.isAsTurn())
+    {
+      this.getA().getMove(this);
+    }
+    else
+    {
+      this.getB().getMove(this);
+    }
   }
 }
 
